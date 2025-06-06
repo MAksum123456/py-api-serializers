@@ -52,7 +52,7 @@ class MovieViewSet(viewsets.ModelViewSet):
 
 
 class MovieSessionViewSet(viewsets.ModelViewSet):
-    queryset = MovieSession.objects.prefetch_related("movie", "cinema_hall")
+    queryset = MovieSession.objects.select_related("movie", "cinema_hall")
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -69,5 +69,5 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 
 class TicketViewSet(viewsets.ModelViewSet):
-    queryset = Ticket.objects.all()
+    queryset = Ticket.objects.select_related("movie_session", "order")
     serializer_class = TicketSerializer
